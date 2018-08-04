@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<title>jq-music</title>
+	<link rel="stylesheet" type="text/css" href="music.css">
+	<link rel="stylesheet" href="http://at.alicdn.com/t/font_774267_fjejs718pvk.css">
+</head>
+<body>
+	<div class="main">
+		<!-- 播放详情页 -->
+		<div class="playingPage">
+			<div class="showLyrics">
+				<span class="iconfont icon-previous btn-back"></span>
+			</div>
+			<div class="playingControl">
+				<!-- 音量 -->
+				<div class="volume">
+					<span class="iconfont icon-volumeup"></span>
+					<div class="volume-control">
+						<span class="currentV"></span>
+					</div>
+				</div>
+				<!-- 播放模式 -->
+				<div class="play-style">
+					<!-- <span class="iconfont icon-repeatoff btn-play-style"></span> -->
+				</div>
+				<!-- 播放进程 -->
+				<div class="progress">
+					<span class="allBar"></span>
+					<span class="playedBar"></span>
+					<div class="showTime">
+						<span class="currentTime"></span>
+						<span >/</span>
+						<span class="allTime"></span>
+					</div>
+				</div>
+				<div class="newpagePlay">
+					<span class="iconfont icon-prev btn-prev"></span>
+					<span class="iconfont icon-play btn1"></span>
+					<span class="iconfont icon-next btn-next"></span>
+				</div>
+			</div>
+		</div>
+		<!-- tittle -->
+		<h2>一个简单的播放器</h2>
+		<!-- 列表 -->
+		<div class="list">
+			<!-- 本地歌单 -->
+			<div class="localMusic">
+				<a href="javascript:;" class="title">本地歌单</a>
+				<ul>
+					
+				</ul>
+			</div>
+			<!-- 收藏歌单 -->
+			<div class="collect"></div>
+			<!-- 随便听听 -->
+			<div class="random">
+				<span class="random-name">随便听听</span>
+				<span class="iconfont icon-next1"></span><!-- 要加iconfont -->
+			</div>
+		</div>
+		<!-- 播放控制和歌曲歌手 -->
+		<div class="control">
+			<audio src="song/One More Time, One More Chance.mp3"></audio>
+			<div class="music">
+				<div class="song"></div>
+				<div class="singer"></div>
+			</div>
+			<div class="play">
+				<span class="iconfont icon-play btn1"></span>
+			</div>
+		</div>
+	</div>
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<script type="text/javascript" src="music.js"></script>
+</body>
+</html>

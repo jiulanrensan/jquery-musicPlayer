@@ -1,0 +1,253 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	background-color: rgba(227,227,227,0.7);
+	font-family: "FangSong";
+}
+.main{
+	width: 414px;
+	height: 100px;
+	background-color: white;
+	margin: 0 auto;
+	-moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.5),;
+	box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.5);
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	position: relative;
+}
+@media screen and (max-width: 768px) {
+	.main{
+		width: 100%;
+		position: relative;
+	}
+}
+h2{
+	text-align: center;
+	padding: 10px;
+}
+.list{
+	width: 100%;
+}
+.localMusic{
+	width: 95%;
+	margin: 0 auto;
+	background-color: rgba(0,0,0,0.1);
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	padding-bottom: 10px;
+}
+.localMusic>a.title{
+	display: block;
+	height: 25px;
+	line-height: 25px;
+	font-size: 1.2em;
+	padding-left: 10px;
+	text-decoration: none;
+	color: black;
+}
+.localMusci ul{
+	padding-left: 10px;
+}
+.localMusic ul li{
+	height: 15px;
+	padding: 5px 0;
+	padding-left: 15px;
+	font-size: 1em;
+	list-style-type: none;
+	color: rgba(0,0,0,0.5);
+	cursor: pointer;
+}
+.localMusic ul li:hover{
+	color: black;
+}
+.random{
+	width: 50%;
+	margin: 10px;
+	background-color: rgba(224,224,224,0.6);
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+.random span.iconfont{
+	display: inline-block;
+	width: 40px;
+	font-size: 22px;
+	cursor: pointer;
+	transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	-o-transition: all 0.3s;
+	-webkit-transition: all 0.3s;
+}
+.random span.random-name{
+	line-height: 50px;
+	font-size: 1.2em;
+	padding-left: 10px;
+}
+.random span.iconfont:hover{
+	padding-left: 10px;
+}
+.control{
+	position: absolute;
+	bottom: 15px;
+	width: 95%;
+	height: 100px;
+	left: 2.5%;
+	background-color: rgba(0,0,0,0.1);
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	cursor: pointer;
+}
+.control .music,
+.control .play{
+	width: 45%;
+	position: absolute;
+}
+.control .music{
+	height: 100px;
+	padding-top: 10px;
+}
+.music .song{
+	height: 40px;
+	font-size: 1.1em;
+	padding: 5px 10px 0 10px;
+	font-weight: bold;
+}
+.music .singer{
+	font-weight: bold;
+	line-height: 30px;
+	font-size: 1em;
+	padding: 0 10px 0 10px;
+}
+.control .play{
+	padding: 30px 20px 0 0;
+	position: absolute;
+	right: 0;
+}
+.control .play>span{
+	float: right;
+	font-size: 40px;
+	cursor: pointer;
+}
+.playingPage{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: 5;
+	display: none;
+	background-color: white;
+}
+.showLyrics{
+	width: 100%;
+	height: 70%;
+	position: relative;
+		background-color: gray;
+}
+.showLyrics>span{
+	position: absolute;
+	font-size: 20px;
+	z-index: 6;
+}
+.btn-back{
+	top: 5px;
+	left: 5px;
+	cursor: pointer;
+}
+.playingControl{
+	width: 100%;
+	height: 30%;
+	position: relative;
+}
+.play-style{
+	position: absolute;
+	top: 10px;
+	right: 5%;
+}
+.play-style>span{
+	font-size: 25px;
+}
+.newpagePlay{
+	width: 50%;
+	height: 50%;
+	margin: 0 auto;
+	display: flex;
+	display: -webkit-flex;
+	justify-content: center;
+	align-items: center;
+}
+.newpagePlay>span{
+	display: block;
+	width: 40%;
+	font-size: 50px;
+	text-align: center;
+}
+.newpagePlay>.icon-prev,
+.newpagePlay>.icon-next{
+	width: 30%;
+}
+.btn-play-style,
+.btn-prev,
+.btn1,
+.btn-next{
+	cursor: pointer;
+}
+.progress{
+	width: 90%;
+	height: 25%;
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+	cursor: pointer;
+}
+.progress .allBar{
+	display: inline-block;
+	width: 100%;
+	height: 4px;
+	background-color: #BDBDBD;
+	position: absolute;
+	top: 10px;
+}
+.progress .playedBar{
+	width: 0%;
+	height: 4px;
+	position: absolute;
+	top: 10px;
+	background-color: black;
+}
+.progress .showTime{
+	position: absolute;
+	top: 20px;
+	font-size: 15px;
+	font-family: 'Arial';
+	right: 0;
+}
+.playingControl .volume{
+	width: 40%;
+	height: 25%;
+	margin-left: 5%;
+	position: relative;
+}
+.volume span.iconfont{
+	font-size: 20px;
+	display: inline-block;
+	width: 15%;
+	position: absolute;
+	cursor: pointer;
+	top: 10px;
+}
+.volume .volume-control{
+	width: 80%;
+	height: 4px;
+	position: absolute;
+	left: 20%;
+	top: 20px;
+	background-color: #BDBDBD;
+	cursor: pointer;
+}
+.volume-control .currentV{
+	width: 0;
+	height: 4px;
+	display: block;
+	position: absolute;
+	background-color: black;
+}
