@@ -216,7 +216,7 @@ $().ready(function(){
 		//对歌曲名字进行编译
 		var codeName = encodeURI(song);
 		//api获取歌词的hash和album_id
-		var urlTemp = "//songsearch.kugou.com/song_search_v2?keyword="+codeName+"&page=1&pagesize=1&userid=-1&clientver=&platform=WebFilter&tag=em&filter=2&iscorrection=1&privilege_filter=0";
+		var urlTemp = "https://songsearch.kugou.com/song_search_v2?keyword="+codeName+"&page=1&pagesize=1&userid=-1&clientver=&platform=WebFilter&tag=em&filter=2&iscorrection=1&privilege_filter=0";
 		$.ajax({
 			url: urlTemp,
 			type: "get",
