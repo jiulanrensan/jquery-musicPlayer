@@ -37,18 +37,23 @@ h2{
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	padding-bottom: 10px;
+	overflow: hidden;
 }
 .localMusic>a.title{
 	display: block;
 	height: 25px;
 	line-height: 25px;
 	font-size: 1.2em;
-	padding-left: 10px;
+	padding-left: 14px;
 	text-decoration: none;
 	color: black;
+	font-weight: bold;
 }
-.localMusci ul{
-	padding-left: 10px;
+.localMusic ul{
+	height: 200px;
+	width: 100%;
+	padding-right: 18px;
+	overflow-y: scroll;
 }
 .localMusic ul li{
 	height: 15px;
@@ -141,12 +146,42 @@ h2{
 	width: 100%;
 	height: 70%;
 	position: relative;
-		background-color: gray;
+	background-size: cover;
+	overflow: hidden;
 }
 .showLyrics>span{
 	position: absolute;
 	font-size: 20px;
+	z-index: 10;
+	color: white;
+}
+.showLyrics>.cover{
+	width: 100%;
+	height: 100%;
+	position: absolute;
 	z-index: 6;
+	background-color: rgba(0,0,0,0.5);
+}
+.lyrics{
+	list-style-type: none;
+	width: 80%;
+	margin-left: 10%;
+	position: absolute;
+	z-index: 7;
+	text-align: center;
+	color: rgb(245,245,245);
+	transition: all 0.5s;
+}
+.lyricLi{
+	padding: 5px 0;
+	font-size: 0.8em;
+	transition: all 0.5s;
+}
+.lyricLi-show{
+	font-size: 1.2em;
+	padding: 8px;
+	color: rgb(255,255,255);
+	
 }
 .btn-back{
 	top: 5px;

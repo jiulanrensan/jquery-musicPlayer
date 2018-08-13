@@ -1,4 +1,4 @@
-(function($){
+$().ready(function(){
 	setHeight();
 	window.onresize = function(){
 		setHeight();
@@ -27,40 +27,70 @@
 	var myAudio = $("audio")[0],
 		repeat = localStorage.repeat || 0,
 		shuffle = localStorage.shuffle || 'false',
-		date = new Date(),
-		//当前音乐,若不是随机模式则默认为当前音乐索引为0
-		currentTrack = shuffle === 'true' ? date.getTime() % playlist.length : 0,
-		iconCount = 0,
-		//continous = true,
-		autoplay = true,
 		playlist = [
 			{
-				song: '猫的报恩片尾曲',
-				singer: '日本动漫',
-				src: 'song/猫的报恩片尾曲.mp3'
+				song: '幻化成风',
+				singer: '日本动漫'
 			},
 			{
 				song: '言叶之庭',
-				singer: '秦基博',
-				src: 'song/言叶之庭.mp3'
+				singer: '秦基博'
 			},
 			{
 				song: 'One More Time, One More Chance',
-				singer: '山崎将义',
-				src: 'song/One More Time, One More Chance.mp3'
+				singer: '山崎将义'
 			},
 			{
 				song: '你被写在我的歌里',
-				singer: '苏打绿、Ella',
-				src: 'song/你被写在我的歌里.mp3'
+				singer: '苏打绿、Ella'
 			},
 			{
 				song: '素颜',
-				singer: '许嵩、何曼婷',
-				src: 'song/素颜.mp3'
+				singer: '许嵩、何曼婷'
+			},
+			{
+				song: '有何不可',
+				singer: '许嵩'
+			},
+			{
+				song: '清明雨上',
+				singer: '许嵩'
+			},
+			{
+				song: '千百度',
+				singer: '许嵩'
+			},
+			{
+				song: '认真的雪',
+				singer: '薛之谦'
+			},
+			{
+				song: '富士山下',
+				singer: '陈奕迅'
+			},
+			{
+				song: '最佳损友',
+				singer: '陈奕迅'
+			},
+			{
+				song: '青花瓷',
+				singer: '周杰伦'
+			},
+			{
+				song: '漂移',
+				singer: '周杰伦'
 			}
-		];
+		],
+		date = new Date(),
+		//当前音乐,若不是随机模式则默认为当前音乐索引为0
+		currentTrack = shuffle === 'true' ? date.getTime() % playlist.length : 0,
+		iconCount = localStorage.iconCount || 0,
+		//continous = true,
+		autoplay = true,
+		lyricsArr1 = [],
+		lyricsArr2 = [];
 
+	//console.log(shuffle);
 	//把音乐列表加进页面中
 	for (var i = 0; i < playlist.length; i++) {
 		$(".localMusic>ul").append("<li>"+playlist[i].song+" - "+playlist[i].singer+"</li>");
@@ -89,7 +119,7 @@
 	//上一首
 	$(".btn-prev").click(function(){
 		if (shuffle === 'true') {
-			shuffle();
+			shufflePlay();
 		}
 		else{
 			currentTrack--;
@@ -99,7 +129,7 @@
 	//下一首
 	$(".btn-next").click(function(){
 		if (shuffle === 'true') {
-			shuffle();
+			shufflePlay();
 		}
 		else{
 			currentTrack++;
@@ -128,15 +158,16 @@
 		else{
 			temp = i;
 		}
+		console.log(currentTrack);
 		loadMusic(temp);
-		play();
+		//play();
 	}
 
 	//余数一定会小于除数（1~除数-1），用来获取随机模式下列表的歌曲
 	//随机播放模式
-	var shuffle = function(){
-		var time = new Date(),
-			currentTrack = time.getTime() % playlist.length;
+	var shufflePlay = function(){
+		var time = new Date();
+		var currentTrack = time.getTime() % playlist.length;
 		turnTrack(currentTrack);
 	}
 
@@ -145,7 +176,8 @@
 		pause();	//停止时让图标改变
 		//shuffle==='true'时表示随机播放
 		if (shuffle === 'true') {
-			shuffle();
+			shufflePlay();
+			console.log("shuffle");
 		}
 		else{
 			//等于0表示只对列表播放一次,顺序播放
@@ -173,16 +205,103 @@
 
 	//页面加载后自动播放
 	var autoPlay =function(){
-		if (autoplay == true) play();
-		getDuration();
+		if (autoplay == true){
+			play();
+			getDuration();
+		}
+	}
+
+	//利用api跨域获取音乐数据
+	var getMusic =function(song){
+		//对歌曲名字进行编译
+		var codeName = encodeURI(song);
+		//api获取歌词的hash和album_id
+		var urlTemp = "http://songsearch.kugou.com/song_search_v2?keyword="+codeName+"&page=1&pagesize=1&userid=-1&clientver=&platform=WebFilter&tag=em&filter=2&iscorrection=1&privilege_filter=0";
+		$.ajax({
+			url: urlTemp,
+			type: "get",
+			dataType: "jsonp",
+			jsonp: "callback",
+			success: function(data){
+				//获取AlbumID
+				//localStorage.album = data.data.lists[0].AlbumID;
+				//获取hash,用于下面获取url
+				//localStorage.fileHash = data.data.lists[0].FileHash;
+				urlTemp = "http://www.kugou.com/yy/index.php?r=play/getdata&hash="+data.data.lists[0].FileHash+"&album_id="+data.data.lists[0].AlbumID;
+				$.ajax({
+					url: urlTemp,
+					type: "get",
+					dataType: "jsonp",
+					jsonp: "callback",
+					jsonpCallback: 'callback',
+					success: function(data){
+						console.log(data.data.lyrics);
+						$("audio").attr("src",data.data.play_url);
+						//$(".showLyrics").css("background-image","url()");
+						$(".showLyrics").css("background-image","url("+data.data.img+")");
+						//清空之前的歌词
+						$(".showLyrics .lyrics").empty();
+						//\n换行符为界限分为数组
+						lyricsArr1 = data.data.lyrics.split("\n");
+						var tempLyr = [];
+						//用正则获取时间
+						//格式为 [00:00.06]陈奕迅 - 富士山下
+						var timeReg = /\[\d{2}:\d{2}.\d{2}\]/g;
+						for (i in lyricsArr1) {
+							//把每个时间提取出来
+							var time = lyricsArr1[i].match(timeReg);
+							//把数组里的时间替换掉,得到歌词
+							var value = lyricsArr1[i].replace(timeReg,"");
+							//把每组时间以冒号分隔开
+							for(j in time){
+								var t = time[j].slice(1,-1).split(":");
+								var tempTime = parseInt(t[0],10)*60 + parseFloat(t[1]);
+								//console.log(t);
+								tempLyr.push([tempTime,value]);
+							}	
+						}
+						lyricsArr2 = tempLyr;
+						appendLyric();
+						play();
+					}
+				});
+			}
+		});
+	}
+
+	//把歌词填充到<ul class="lyrics"></ul>
+	var appendLyric = function(){
+		var lyricLi;
+		for (var i = 0; i < lyricsArr2.length; i++) {
+			//把时间作为属性添加，歌词作为内容添加
+			lyricLi = "<li lyric-time='"+lyricsArr2[i][0]+"' class='lyricLi'>"+lyricsArr2[i][1]+"</li>";
+			$(".showLyrics .lyrics").append(lyricLi);
+		}
+		setInterval(showLyric,100);
+	}
+	var showLyric = function(){
+		var liH = $(".lyrics li").eq(0).outerHeight();
+		//console.log(liH);
+		for (var i = 0; i < lyricsArr2.length; i++) {
+			//为什么直接获取数组报错？
+			var current = $(".lyrics li").eq(i).attr("lyric-time");
+			var next = $(".lyrics li").eq(i+1).attr("lyric-time");
+			if (myAudio.currentTime > current && myAudio.currentTime < next) {
+				$(".lyrics li").removeClass("lyricLi-show");
+				$(".lyrics li").eq(i).addClass("lyricLi-show");
+				//开始时top负负得正
+				$(".showLyrics .lyrics").css("top",-liH*(i-4));
+			}
+		}
 	}
 
 	//加载音乐
 	var loadMusic = function(i){
-		$("audio").attr("src",playlist[i].src);
-		//console.log(playlist[i].src);
+		getMusic(playlist[i].song);
+		//$("audio").attr("src",playlist[i].src);
 		$(".song").html(playlist[i].song);
 		$(".singer").html(playlist[i].singer);
+		$(".localMusic li").siblings().css("color","rgba(0,0,0,0.5)");
 		$(".localMusic li").eq(i).css("color","black");
 		//加载后获取歌曲时长
 		myAudio.addEventListener('durationchange', getDuration, false);
@@ -226,6 +345,7 @@
 			shuffle = localStorage.shuffle = 'true';
 		}
 		$(".play-style").html("<span class='iconfont btn-play-style "+iconArr[iconCount]+"'></span>");
+		localStorage.iconCount = iconCount;
 		iconCount++;
 	}
 	turnIcon();
@@ -311,5 +431,5 @@
 	})
 	
 
-})(jQuery);
+});
 
