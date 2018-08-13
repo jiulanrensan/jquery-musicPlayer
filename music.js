@@ -216,7 +216,7 @@ $().ready(function(){
 		//对歌曲名字进行编译
 		var codeName = encodeURI(song);
 		//api获取歌词的hash和album_id
-		var urlTemp = "songsearch.kugou.com/song_search_v2?keyword="+codeName+"&page=1&pagesize=1&userid=-1&clientver=&platform=WebFilter&tag=em&filter=2&iscorrection=1&privilege_filter=0";
+		var urlTemp = "http://songsearch.kugou.com/song_search_v2?keyword="+codeName+"&page=1&pagesize=1&userid=-1&clientver=&platform=WebFilter&tag=em&filter=2&iscorrection=1&privilege_filter=0";
 		$.ajax({
 			url: urlTemp,
 			type: "get",
@@ -227,44 +227,51 @@ $().ready(function(){
 				//localStorage.album = data.data.lists[0].AlbumID;
 				//获取hash,用于下面获取url
 				//localStorage.fileHash = data.data.lists[0].FileHash;
-				urlTemp = "www.kugou.com/yy/index.php?r=play/getdata&hash="+data.data.lists[0].FileHash+"&album_id="+data.data.lists[0].AlbumID;
-				$.ajax({
-					url: urlTemp,
-					type: "get",
-					dataType: "jsonp",
-					jsonp: "callback",
-					jsonpCallback: 'callback',
-					success: function(data){
-						console.log(data.data.lyrics);
-						$("audio").attr("src",data.data.play_url);
-						//$(".showLyrics").css("background-image","url()");
-						$(".showLyrics").css("background-image","url("+data.data.img+")");
-						//清空之前的歌词
-						$(".showLyrics .lyrics").empty();
-						//\n换行符为界限分为数组
-						lyricsArr1 = data.data.lyrics.split("\n");
-						var tempLyr = [];
-						//用正则获取时间
-						//格式为 [00:00.06]陈奕迅 - 富士山下
-						var timeReg = /\[\d{2}:\d{2}.\d{2}\]/g;
-						for (i in lyricsArr1) {
-							//把每个时间提取出来
-							var time = lyricsArr1[i].match(timeReg);
-							//把数组里的时间替换掉,得到歌词
-							var value = lyricsArr1[i].replace(timeReg,"");
-							//把每组时间以冒号分隔开
-							for(j in time){
-								var t = time[j].slice(1,-1).split(":");
-								var tempTime = parseInt(t[0],10)*60 + parseFloat(t[1]);
-								//console.log(t);
-								tempLyr.push([tempTime,value]);
-							}	
-						}
-						lyricsArr2 = tempLyr;
-						appendLyric();
-						play();
-					}
-				});
+				$(".song").attr("hash",data.data.lists[0].FileHash);
+				$(".song").attr("album-id",data.data.lists[0].AlbumID);
+				getMusicUrl();
+			}
+		});
+	}
+	var getMusicUrl = function(){
+		var hashAttr = $(".song").attr("hash");
+		var album_idAttr = $(".song").attr("album-id");
+		urlTemp = "http://www.kugou.com/yy/index.php?r=play/getdata&hash="+hashAttr+"&album_id="+album_idAttr;
+		$.ajax({
+			url: urlTemp,
+			type: "get",
+			dataType: "jsonp",
+			jsonp: "callback",
+			jsonpCallback: 'callback',
+			success: function(data){
+				console.log(data.data.lyrics);
+				$("audio").attr("src",data.data.play_url);
+				//$(".showLyrics").css("background-image","url()");
+				$(".showLyrics").css("background-image","url("+data.data.img+")");
+				//清空之前的歌词
+				$(".showLyrics .lyrics").empty();
+				//\n换行符为界限分为数组
+				lyricsArr1 = data.data.lyrics.split("\n");
+				var tempLyr = [];
+				//用正则获取时间
+				//格式为 [00:00.06]陈奕迅 - 富士山下
+				var timeReg = /\[\d{2}:\d{2}.\d{2}\]/g;
+				for (i in lyricsArr1) {
+					//把每个时间提取出来
+					var time = lyricsArr1[i].match(timeReg);
+					//把数组里的时间替换掉,得到歌词
+					var value = lyricsArr1[i].replace(timeReg,"");
+					//把每组时间以冒号分隔开
+					for(j in time){
+						var t = time[j].slice(1,-1).split(":");
+						var tempTime = parseInt(t[0],10)*60 + parseFloat(t[1]);
+						//console.log(t);
+						tempLyr.push([tempTime,value]);
+					}	
+				}
+				lyricsArr2 = tempLyr;
+				appendLyric();
+				play();
 			}
 		});
 	}
