@@ -236,7 +236,7 @@ $().ready(function(){
 	var getMusicUrl = function(){
 		var hashAttr = $(".song").attr("hash");
 		var album_idAttr = $(".song").attr("album-id");
-		urlTemp = "http://www.kugou.com/yy/index.php?r=play/getdata&hash="+hashAttr+"&album_id="+album_idAttr;
+		urlTemp = "https://www.kugou.com/yy/index.php?r=play/getdata&hash="+hashAttr+"&album_id="+album_idAttr;
 		$.ajax({
 			url: urlTemp,
 			type: "get",
