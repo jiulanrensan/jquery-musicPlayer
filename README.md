@@ -1,11 +1,11 @@
 # jquery-musicPlayer
 用jquery实现一个简单的音乐播放器
 ## 实现功能：
-### 点击下方歌手和歌曲的方框，弹出详情页
-### 控制音量
+### 1. 点击下方歌手和歌曲的方框，弹出详情页
+### 2. 控制音量
 * 绑定mousemove和mousedown事件，通过鼠标点击和拖动实现控制音量，并保存在localStorage中供下次打开页面调用
 
-### 控制播放进度条
+### 3. 控制播放进度条
 * 播放时进度条自动移动
 ```
 //其实就是就是将进度条当成一个长方形，长度随时间变化，再绑定一个定时器定时赋值
@@ -46,14 +46,14 @@ $(".progress").bind("mousedown",function(event){
   })
 });
 ```
-### 多种播放模式
+### 4. 多种播放模式
 * 随机播放
 * 顺序播放（播放到列表最后一首停止）
 * 循环播放
 * 单曲播放
 * 点击图标切换播放模式
 
-### 歌词随进度滚动
+### 5. 歌词随进度滚动
 ```
 //定时器绑定函数
 var showLyric = function(){
@@ -74,7 +74,7 @@ var showLyric = function(){
 	}
 }
 ```
-### jsonp方式跨域获取酷狗api
+### 6. jsonp方式跨域获取酷狗api
 ```
 //对歌曲名字进行编译
 var codeName = encodeURI(song);
@@ -97,21 +97,23 @@ $.ajax({
   }
 
 var getMusicUrl = function(){
-		var hashAttr = $(".song").attr("hash");
-		var album_idAttr = $(".song").attr("album-id");
-		urlTemp = "http://www.kugou.com/yy/index.php?r=play/getdata&hash="+hashAttr+"&album_id="+album_idAttr;
-		console.log(urlTemp);
-		$.ajax({
-			url: urlTemp,
-			type: "get",
-			dataType: "jsonp",
-			jsonp: "callback",
-			jsonpCallback: 'callback',
-			success: function(data){
-				...
-			}
-		});
-	}
+	var hashAttr = $(".song").attr("hash");
+	var album_idAttr = $(".song").attr("album-id");
+	urlTemp = "http://www.kugou.com/yy/index.php?r=play/getdata&hash="
+	+hashAttr+
+	"&album_id="+album_idAttr;
+	console.log(urlTemp);
+	$.ajax({
+		url: urlTemp,
+		type: "get",
+		dataType: "jsonp",
+		jsonp: "callback",
+		jsonpCallback: 'callback',
+		success: function(data){
+			...
+		}
+	});
+}
 ```
 播放器界面
 
