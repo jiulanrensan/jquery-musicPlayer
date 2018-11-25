@@ -217,6 +217,7 @@ $().ready(function(){
 		var codeName = encodeURI(song);
 		//api获取歌词的hash和album_id
 		var urlTemp = "https://songsearch.kugou.com/song_search_v2?keyword="+codeName+"&page=1&pagesize=1&userid=-1&clientver=&platform=WebFilter&tag=em&filter=2&iscorrection=1&privilege_filter=0";
+		console.log(urlTemp);
 		$.ajax({
 			url: urlTemp,
 			type: "get",
@@ -237,6 +238,7 @@ $().ready(function(){
 		var hashAttr = $(".song").attr("hash");
 		var album_idAttr = $(".song").attr("album-id");
 		urlTemp = "http://www.kugou.com/yy/index.php?r=play/getdata&hash="+hashAttr+"&album_id="+album_idAttr;
+		console.log(urlTemp);
 		$.ajax({
 			url: urlTemp,
 			type: "get",
