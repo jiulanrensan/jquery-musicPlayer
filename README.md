@@ -66,20 +66,23 @@ var showLyric = function(){
       //判断歌曲当前播放时间和歌词列表时间
 			if (myAudio.currentTime > current && myAudio.currentTime < next) {
         //给当前展示的歌词行添加样式
-				$(".lyrics li").removeClass("lyricLi-show");
-				$(".lyrics li").eq(i).addClass("lyricLi-show");
-				//开始时top负负得正
-				$(".showLyrics .lyrics").css("top",-liH*(i-4));
-			}
+		$(".lyrics li").removeClass("lyricLi-show");
+		$(".lyrics li").eq(i).addClass("lyricLi-show");
+		//开始时top负负得正
+		$(".showLyrics .lyrics").css("top",-liH*(i-4));
 		}
 	}
+}
 ```
 ### jsonp方式跨域获取酷狗api
 ```
 //对歌曲名字进行编译
 var codeName = encodeURI(song);
 //api获取歌词的hash和album_id
-var urlTemp = "https://songsearch.kugou.com/song_search_v2?keyword="+codeName+"&page=1&pagesize=1&userid=-1&clientver=&platform=WebFilter&tag=em&filter=2&iscorrection=1&privilege_filter=0";
+var urlTemp = "https://songsearch.kugou.com/song_search_v2?keyword="
++codeName+
+"&page=1&pagesize=1&userid=-1&clientver=&platform=WebFilter&tag=em"+
+"&filter=2&iscorrection=1&privilege_filter=0";
 $.ajax({
   url: urlTemp,
   type: "get",
@@ -111,5 +114,6 @@ var getMusicUrl = function(){
 	}
 ```
 播放器界面
+
 ![](https://github.com/jiulanrensan/jquery-musicPlayer/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20181125142639.png)
 ![](https://github.com/jiulanrensan/jquery-musicPlayer/blob/master/%E5%BE%AE%E4%BF%A1%E6%88%AA%E5%9B%BE_20181125142657.png)
